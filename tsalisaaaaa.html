@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spesial Untukmu ✨</title>
+    <style>
+        /* --- STYLING UTAMA --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0f0c20; /* Warna gelap neon agar estetik */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- HALAMAN 1: AMPLOP --- */
+        .envelope-wrapper {
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope {
+            font-size: 80px;
+            animation: float 2s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        .envelope-text {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #ff758f;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,117,143,0.5);
+        }
+
+        /* --- SCREEN BERTAHAP --- */
+        .screen {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 25px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* --- TEKS MENGETIK --- */
+        .typing-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #f7d6e0;
+            min-height: 100px;
+            margin-bottom: 20px;
+        }
+
+        /* --- TOMBOL --- */
+        .btn {
+            background: linear-gradient(45deg, #ff477e, #ff7096);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.6);
+        }
+
+        /* --- INTERAKSI GAME JELAS (SCREEN 3) --- */
+        .btn-flex {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            position: relative;
+            height: 50px;
+        }
+
+        #btnNo {
+            background: #4a4e69;
+            box-shadow: none;
+            position: absolute;
+            transition: all 0.1s ease;
+        }
+
+        /* --- GALERI FOTO MINI --- */
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            background: #fff;
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            padding: 8px;
+            transform: rotate(-5deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* --- ANIMASI --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HUJAN HATI NEON --- */
+        .heart-fall {
+            position: fixed;
+            top: -20px;
+            color: #ff477e;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 999;
+            text-shadow: 0 0 8px rgba(255,71,126,0.8);
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- SLIDE 1: ENVELOPE -->
+        <div class="envelope-wrapper" id="slide1" onclick="openLetter()">
+            <div class="envelope">✉️</div>
+            <div class="envelope-text">PESAN UNTUK SAYANG. <br><b>👉 Klik untuk membuka 👈</b></div>
+        </div>
+
+        <!-- SLIDE 2: TYPING MESSAGE -->
+        <div class="screen" id="slide2">
+            <h2 style="color: #ff477e; margin-bottom: 15px;">PESAN UNTUK TSALISA.. 💖💖</h2>
+            <div class="typing-text" id="textSpace"></div>
+            <button class="btn" id="nextBtn" style="display: none;" onclick="goToGame()">Lanjut ✨</button>
+        </div>
+
+        <!-- SLIDE 3: INTERACTIVE GAME -->
+        <div class="screen" id="slide3">
+            <h3 style="color: #ff7096; margin-bottom: 15px;">Pertanyaan Serius! 🥺</h3>
+            <p style="color: #f7d6e0;">Apapun yang terjadi nanti, Pokok nya kita raus sama sama terus sayang harus tetap nemenin aku jadi partner hidup aku, Dan bikin anak setiap malam</p>
+            
+            <div class="btn-flex">
+                <button class="btn" onclick="celebrate()">Mau Banget 😘</button>
+                <button class="btn" id="btnNo" onmouseover="kabur()">Tetap Harus Mau😜</button>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: CELEBRATION (FINAL) -->
+        <div class="screen" id="slide4">
+            <!-- Ganti src gambar di bawah dengan link foto kalian berdua jika ada -->
+            <div class="photo-frame">
+                <img src="piz.jpg" alt="Kita">
+            </div>
+            <h2 style="color: #ff477e; margin-bottom: 10px;">Yeayyy! 🥰</h2>
+            <p style="color: #f7d6e0; font-size: 15px; line-height: 1.6;">
+                Makasih ya udah milih buat tetap tinggal. Aku tahu kita kadang ga sempurna, tapi bareng kamu, semuanya jadi jauh lebih bermakna. 
+                <br><br>
+                <i>I love you more than words can say.</i>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Data teks untuk efek mengetik
+        const pesan = "Aku cuma mau bilang makasih ya... Makasih ya sayang udah mau nemenin aku, Jadi partner hidup aku nemenin aku selama ini mengisi hari hari aku, ya walupun tukang mara meajuk klw di ejek tapi aku senang ada ayang di hidup aku makasih untuk semua nya 💐💐";
+        let index = 0;
+
+        function openLetter() {
+            document.getElementById('slide1').style.display = 'none';
+            document.getElementById('slide2').classList.add('active');
+            typeWriter();
+        }
+
+        function typeWriter() {
+            if (index < pesan.length) {
+                document.getElementById("textSpace").innerHTML += pesan.charAt(index);
+                index++;
+                setTimeout(typeWriter, 40); // Kecepatan mengetik (ms)
+            } else {
+                document.getElementById("nextBtn").style.display = "inline-block";
+            }
+        }
+
+        function goToGame() {
+            document.getElementById('slide2').classList.remove('active');
+            document.getElementById('slide3').classList.add('active');
+            // Reset posisi tombol "Nggak" di awal slide 3
+            const btnNo = document.getElementById('btnNo');
+            btnNo.style.position = 'relative';
+            btnNo.style.left = '0';
+            btnNo.style.top = '0';
+        }
+
+        // Fungsi tombol "Nggak" menghindar saat didekati kursor
+        function kabur() {
+            const btnNo = document.getElementById('btnNo');
+            
+            // Mengubah ke fixed agar bebas bergerak di seluruh layar saat dikejar
+            btnNo.style.position = 'fixed';
+            
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 50);
+            
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            document.getElementById('slide3').classList.remove('active');
+            document.getElementById('slide4').classList.add('active');
+            setInterval(createHeart, 150); // Jalankan hujan hati neon
+        }
+
+        // Efek Hujan Hati Neon
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall');
+            
+            // Variasi emoji cinta
+            const hearts = ['❤️', '💖', '✨', '💕', '🥰', '😘', '😍', 'LOVE YOU', 'NURUL', 'PESEK', 'BELONDE'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 18 + 12;
+            heart.style.fontSize = size + 'px';
+            heart.style.animationDuration = Math.random() * 2 + 2.5 + 's';
+            heart.style.opacity = Math.random() * 0.8 + 0.2;
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove(); }, 4000);
+        }
+    </script>
+</body>
+</html>
